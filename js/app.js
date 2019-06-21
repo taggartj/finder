@@ -97,8 +97,7 @@
                 ]
             }
         ];
-
-
+        
     // Get finder settings DrupalSettings. saves a rest call.
     if (drupalSettings.finderSettings) {
         console.log(drupalSettings.finderSettings);

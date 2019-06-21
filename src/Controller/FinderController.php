@@ -4,6 +4,7 @@ namespace Drupal\finder\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,16 +39,25 @@ class FinderController extends ControllerBase {
   protected $session;
 
   /**
+   * The entity manager.
+   *
+   * @var \Drupal\Core\Entity\EntityManagerInterface
+   */
+  protected $entityManager;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
     LoggerInterface $logger,
-    SessionInterface $session
+    SessionInterface $session,
+    EntityManagerInterface $entity_manager
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->logger = $logger;
     $this->session = $session;
+    $this->entityManager = $entity_manager;
   }
 
   /**
@@ -57,7 +67,8 @@ class FinderController extends ControllerBase {
     return new static(
       $container->get('entity_type.manager'),
       $container->get('logger.channel.finder'),
-      $container->get('session')
+      $container->get('session'),
+      $container->get('entity.manager')
     );
   }
 
@@ -227,8 +238,8 @@ class FinderController extends ControllerBase {
             // var_dump($paragraph->get($machine_name)->getValue()[0]["value"]); echo("<br>");.
           }
 
-          $field_config = \Drupal::entityManager()->getStorage('field_config')->load("paragraph" . '.' . "service_paragraphs" . '.' . $machine_name)->toArray();
-
+          // $field_config = \Drupal::entityManager()->getStorage('field_config')->load("paragraph" . '.' . "service_paragraphs" . '.' . $machine_name)->toArray();
+          $field_config = $this->entityManager->getStorage('field_config')->load("paragraph" . '.' . "service_paragraphs" . '.' . $machine_name)->toArray();
           $field_data["label"] = $field_config["label"];
           $field_data["weight"] = $pdcontent[$machine_name]["weight"];
 
@@ -370,7 +381,7 @@ class FinderController extends ControllerBase {
   /**
    * Creates the configuration data for page.
    *
-   * @return JsonResponse
+   * @return \Drupal\Component\Serialization\JsonResponse
    *   json response.
    */
   public function configuration() {
@@ -388,7 +399,7 @@ class FinderController extends ControllerBase {
    * Get the finder page config data.
    *
    * @return array
-   *  this returns an array of data.
+   *   this returns an array of data.
    */
   public function getConfigData() {
     $config = \Drupal::service('config.factory')->getEditable("finder.settings");
