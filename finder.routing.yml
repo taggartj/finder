@@ -14,12 +14,14 @@ finder.facettree:
     _controller: '\Drupal\finder\Controller\FinderController::facetTree'
   requirements:
     _permission: 'access content'
+
 finder.servicelist:
   path: '/rest/servicelist'
   defaults:
     _controller: '\Drupal\finder\Controller\FinderController::serviceList'
   requirements:
     _permission: 'access content'
+
 finder.sendemail:
   path: '/rest/sendemail'
   methods: [POST]
@@ -27,12 +29,14 @@ finder.sendemail:
     _controller: '\Drupal\finder\Controller\FinderController::sendEmail'
   requirements:
     _permission: 'access content'
+
 finder.configuration:
   path: '/rest/finder_settings'
   defaults:
     _controller: '\Drupal\finder\Controller\FinderController::configuration'
   requirements:
     _permission: 'access content'
+
 finder.settings:
 #  path: '/admin/structure/finder/settings'
   path: '/admin/config/content/finder'

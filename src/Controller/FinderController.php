@@ -71,7 +71,7 @@ class FinderController extends ControllerBase {
     /* Assure that a session has been started,
     and then set the csrf_token.
      */
-    return [
+    $build = [
       '#theme' => 'finder',
       '#attached' => [
         'library' => [
@@ -79,6 +79,10 @@ class FinderController extends ControllerBase {
         ],
       ],
     ];
+
+    $data = $this->getConfigData();
+    $build['#attached']['drupalSettings']['finderSettings'] = $data;
+    return $build;
   }
 
   /**
@@ -370,12 +374,23 @@ class FinderController extends ControllerBase {
    *   json response.
    */
   public function configuration() {
+    // @TODO refactor this for multiple finders.
     if ($this->session->isStarted() === FALSE) {
       $this->session->start();
       $this->session->set('foo', 'bar');
     }
     $this->logger->notice("starting session.");
+    $data = $this->getConfigData();
+    return new JsonResponse($data);
+  }
 
+  /**
+   * Get the finder page config data.
+   *
+   * @return array
+   *  this returns an array of data.
+   */
+  public function getConfigData() {
     $config = \Drupal::service('config.factory')->getEditable("finder.settings");
     $data = [];
     $data["title"] = $config->get("title");
@@ -389,8 +404,7 @@ class FinderController extends ControllerBase {
     $data["main_header"] = $config->get("main_header");
     $data["button_select_all"] = $config->get("button_select_all");
     $data["button_clear_selections"] = $config->get("button_clear_selections");
-    return new JsonResponse($data);
-
+    return $data;
   }
 
   /**

@@ -98,10 +98,11 @@
             }
         ];
 
-    // read the data from JSON endpoints
 
-    $.getJSON( "/rest/finder_settings", function( response ) {
-        //alert(JSON.stringify(response));
+    // Get finder settings DrupalSettings. saves a rest call.
+    if (drupalSettings.finderSettings) {
+        console.log(drupalSettings.finderSettings);
+        var response = drupalSettings.finderSettings;
         $('#pagetitle').html(response.title.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pagesubtitle').html(response.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pagequestionheader').html(response.question_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
@@ -114,11 +115,29 @@
         $('#pagemainheader').html(response.main_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('.selectall-button').html(response.button_select_all);
         $('.clear-button').html(response.button_clear_selections);
-    });
+    }
+    else {
+        // Use original endpoint if not set.
+        // read the data from JSON endpoints
+        $.getJSON( "/rest/finder_settings", function( response ) {
+            //alert(JSON.stringify(response));
+            $('#pagetitle').html(response.title.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('#pagesubtitle').html(response.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('#pagequestionheader').html(response.question_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('#pageserviceheader').html(response.service_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('#pagechartheader').html(response.chart_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('#pageemailformheader').html(response.email_form_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            //$('#pageemailaddress').html(response.data.email_address);
+            //$('#pageemailname').html(response.data.email_name);
+            //$('#pageemailbody').html(response.email_body.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('#pagemainheader').html(response.main_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+            $('.selectall-button').html(response.button_select_all);
+            $('.clear-button').html(response.button_clear_selections);
+        });
 
+    }
 
     $.getJSON( "/rest/facettree", function( response ) {
-
         // JSON responses are automatically parsed.
 
         // here, see if there are selected facets in the URL
