@@ -1,7 +1,7 @@
 {
-    "name": "cubear/finder",
+    "name": "taggart/finder",
     "description": "Finder is a Drupal 8 module to help users find services which meet their criteria",
-    "type": "drupal-module",
+    "type": "drupal-custom-module",
     "homepage": "https://it.cornell.edu/custom-web",
     "authors": [
         {
@@ -24,6 +24,11 @@
             "name": "Anthony Adinolfi",
             "email": "ama39@cornell.edu",
             "role": "Designer"
+        },
+        {
+            "name": "Taggart Jensen",
+            "email": "taggart.jensen@xvt.com.au",
+            "role": "Guy who forked this."
         }
     ],
     "support": {

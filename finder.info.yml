@@ -5,7 +5,7 @@ package: Custom
 type: module
 core: 8.x
 dependencies:
-  - paragraphs:paragraphs
+  - paragraphs
 libraries:
   - finder/finder
 configure: finder.settings
