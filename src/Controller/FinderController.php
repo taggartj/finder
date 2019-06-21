@@ -86,7 +86,7 @@ class FinderController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createfacettree() {
+  private function createFacetTree() {
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')
       ->loadTree("facets", 0, NULL, TRUE);
     // $vid, $parent, $max_depth, $load_entities);
@@ -157,8 +157,8 @@ class FinderController extends ControllerBase {
    * @return \Drupal\Component\Serialization\JsonResponse
    *   Returns a json response.
    */
-  public function facettree() {
-    $questions = $this->createfacettree();
+  public function facetTree() {
+    $questions = $this->createFacetTree();
     return new JsonResponse($questions);
   }
 
@@ -257,15 +257,15 @@ class FinderController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function servicelist() {
-    $services = $this->createtestservicelist();
+  public function serviceList() {
+    $services = $this->createTestServiceList();
     return new JsonResponse($services);
   }
 
   /**
    *
    */
-  public function send_email() {
+  public function sendEmail() {
 
     if ($this->session->isStarted() === FALSE) {
       return new JsonResponse("no session, so sorry");

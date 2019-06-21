@@ -11,20 +11,20 @@ finder.content:
 finder.facettree:
   path: '/rest/facettree'
   defaults:
-    _controller: '\Drupal\finder\Controller\FinderController::facettree'
+    _controller: '\Drupal\finder\Controller\FinderController::facetTree'
   requirements:
     _permission: 'access content'
 finder.servicelist:
   path: '/rest/servicelist'
   defaults:
-    _controller: '\Drupal\finder\Controller\FinderController::servicelist'
+    _controller: '\Drupal\finder\Controller\FinderController::serviceList'
   requirements:
     _permission: 'access content'
 finder.sendemail:
   path: '/rest/sendemail'
   methods: [POST]
   defaults:
-    _controller: '\Drupal\finder\Controller\FinderController::send_email'
+    _controller: '\Drupal\finder\Controller\FinderController::sendEmail'
   requirements:
     _permission: 'access content'
 finder.configuration:
