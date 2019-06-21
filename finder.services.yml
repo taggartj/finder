@@ -1,0 +1,4 @@
+services:
+  logger.channel.finder:
+    parent: logger.channel_base
+    arguments: ['finder']

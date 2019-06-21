@@ -4,22 +4,70 @@ namespace Drupal\finder\Controller;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal;
 use Drupal\taxonomy\Entity\Term;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- *
+ * Class for Finder controller.
  */
 class FinderController extends ControllerBase {
 
   /**
-   * Display the markup.
+   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * A logger instance.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
+   * The session.
+   *
+   * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+   */
+  protected $session;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(
+    EntityTypeManagerInterface $entity_type_manager,
+    LoggerInterface $logger,
+    SessionInterface $session
+  ) {
+    $this->entityTypeManager = $entity_type_manager;
+    $this->logger = $logger;
+    $this->session = $session;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('entity_type.manager'),
+      $container->get('logger.channel.finder'),
+      $container->get('session')
+    );
+  }
+
+  /**
+   * Display the markup for /finder route.
    *
    * @return array
+   *   this returns the render array.
    */
   public function content() {
-
     /* Assure that a session has been started,
     and then set the csrf_token.
      */
@@ -34,19 +82,18 @@ class FinderController extends ControllerBase {
   }
 
   /**
-   * Return a JSON representation of the facets tree.
-   *
-   * @return \Drupal\Component\Serialization\JsonResponse     the facet tree
+   * @return array
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function createfacettree() {
-    $terms = \Drupal::entityTypeManager()
-      ->getStorage('taxonomy_term')
+    $terms = $this->entityTypeManager->getStorage('taxonomy_term')
       ->loadTree("facets", 0, NULL, TRUE);
     // $vid, $parent, $max_depth, $load_entities);
     // Extract data for all of the terms
     foreach ($terms as $term) {
 
-      if (sizeof($term->get('field_control_type')->getValue()) > 0) {
+      if (count($term->get('field_control_type')->getValue()) > 0) {
         $tid = $term->get('field_control_type')->getValue()[0]["target_id"];
         $control_type = Term::load($tid)->getName();
       }
@@ -102,29 +149,34 @@ class FinderController extends ControllerBase {
     }
     array_multisort($weight, SORT_ASC, $questions);
     return $questions;
-
   }
 
   /**
+   * This function does something.
    *
+   * @return \Drupal\Component\Serialization\JsonResponse
+   *   Returns a json response.
    */
   public function facettree() {
-
     $questions = $this->createfacettree();
     return new JsonResponse($questions);
-
   }
 
   /**
+   * This function does something.
    *
+   * @return array
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createtestservicelist() {
+  private function createTestServiceList() {
 
     $values = [
       'type' => 'service',
     ];
 
-    $nodes = Drupal::entityTypeManager()
+    $nodes = $this->entityTypeManager
       ->getListBuilder('node')
       ->getStorage()
       ->loadByProperties($values);
@@ -133,13 +185,11 @@ class FinderController extends ControllerBase {
     $services = [];
 
     // This is how to get the node info.
-    $display = \Drupal::entityTypeManager()
-      ->getStorage('entity_view_display')
+    $display = $this->entityTypeManager->getStorage('entity_view_display')
       ->load("node" . '.' . "service" . '.' . "default");
 
     // echo(json_encode($display->toArray())); echo"<br>";.
-    $paragraph_display = \Drupal::entityTypeManager()
-      ->getStorage('entity_view_display')
+    $paragraph_display = $this->entityTypeManager->getStorage('entity_view_display')
       ->load("paragraph.service_paragraphs.default");
     // ->load("paragraph" . '.' . "service_paragraphs" . '.' . "default");
     foreach ($nodes as $node) {
@@ -167,7 +217,7 @@ class FinderController extends ControllerBase {
 
         foreach ($pdcontent as $machine_name => $field_data) {
           $field_data = [];
-          if (sizeof($paragraph->get($machine_name)->getValue()) > 0) {
+          if (count($paragraph->get($machine_name)->getValue()) > 0) {
             $field_data["value"] = $paragraph->get($machine_name)->getValue()[0]["value"];
 
             // var_dump($paragraph->get($machine_name)->getValue()[0]["value"]); echo("<br>");.
@@ -200,7 +250,12 @@ class FinderController extends ControllerBase {
   }
 
   /**
+   * This function does something.
    *
+   * @return \Drupal\Component\Serialization\JsonResponse
+   *
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public function servicelist() {
     $services = $this->createtestservicelist();
@@ -212,19 +267,19 @@ class FinderController extends ControllerBase {
    */
   public function send_email() {
 
-    if (\Drupal::service('session')->isStarted() === FALSE) {
+    if ($this->session->isStarted() === FALSE) {
       return new JsonResponse("no session, so sorry");
     }
     // $url = \Drupal::request()->getSchemeAndHttpHost().
     //        "/session/token";
-    // $desiredtoken = $this->get_web_page($url);
+    // $desiredtoken = $this->getWebPage($url);
     // $desired_token = session_id();
     // $desired_token = Drupal::csrfToken()->get();
     // $intoken = \Drupal::request()->headers->get("X-CSRF-Token");
     // return new JsonResponse(["want $desired_token got $intoken"]);
     // Data include name, email, facets (string)
     $json_string = \Drupal::request()->getContent();
-    // \Drupal::logger('finder')->notice("email json is $json_string");
+    // $this->logger->notice("email json is $json_string");
     $decoded = Json::decode($json_string);
 
     // Get $qdata from $decoded.
@@ -258,7 +313,7 @@ class FinderController extends ControllerBase {
 
     $body = $body . "\r\nYour resulting choices were:\r\n";
 
-    $services = $this->createtestservicelist();
+    $services = $this->createTestServiceList();
 
     foreach ($sdata as $svc) {
       foreach ($services as $service) {
@@ -289,8 +344,8 @@ class FinderController extends ControllerBase {
     $params['message'] = $body;
     $params['subject'] = "ABC";
 
-    \Drupal::logger('finder')->notice("to is $to");
-    \Drupal::logger('finder')->notice("message is {$params['message']}");
+    $this->logger->notice("to is $to");
+    $this->logger->notice("message is {$params['message']}");
 
     // $params['node_title'] = $entity->label();
     $langcode = \Drupal::currentUser()->getPreferredLangcode();
@@ -309,14 +364,17 @@ class FinderController extends ControllerBase {
   }
 
   /**
+   * Creates the configuration data for page.
    *
+   * @return JsonResponse
+   *   json response.
    */
   public function configuration() {
-    if (\Drupal::service('session')->isStarted() === FALSE) {
-      \Drupal::service('session')->start();
-      \Drupal::service('session')->set('foo', 'bar');
+    if ($this->session->isStarted() === FALSE) {
+      $this->session->start();
+      $this->session->set('foo', 'bar');
     }
-    \Drupal::logger('finder')->notice("starting session.");
+    $this->logger->notice("starting session.");
 
     $config = \Drupal::service('config.factory')->getEditable("finder.settings");
     $data = [];
@@ -338,7 +396,7 @@ class FinderController extends ControllerBase {
   /**
    *
    */
-  private function get_web_page($url) {
+  private function getWebPage($url) {
     $options = [
     // Return web page.
       CURLOPT_RETURNTRANSFER => TRUE,

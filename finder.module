@@ -1,11 +1,12 @@
-<?PHP
+<?php
 
 /**
  * @file
+ * Contains the finder.module.
  */
 
 /**
- *
+ * Implements hook_theme().
  */
 function finder_theme($existing, $type, $theme, $path) {
   return [
@@ -15,10 +16,6 @@ function finder_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
-
-// See https://www.drupal.org/docs/8/theming/twig/create-custom-twig-templates-from-custom-module
-// the template => was found on
-// https://www.drupal.org/node/2878499
 
 /**
  * Implements hook_mail().
@@ -42,7 +39,6 @@ function finder_mail($key, &$message, $params) {
  */
 function finder_menu() {
   $items = [];
-
   $items['admin/config/content/finder'] = [
     'title' => 'Finder',
     'description' => 'Configuration for Finder module',
