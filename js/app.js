@@ -271,9 +271,6 @@
         // every other row
         for (var i=0;i<sortedfields.length;i++) {
             field = sortedfields[i];
-            //console.log(field);
-            //console.log(servicehelp.field_data);
-            //console.log(servicehelp);
 
             chart = chart + "<tr>";
             chart = chart + "<th scope='row'>"+servicelist[0].field_data[field].label;
