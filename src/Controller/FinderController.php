@@ -97,7 +97,11 @@ class FinderController extends ControllerBase {
   }
 
   /**
+   * This function creates the Facet Tree.
+   *
    * @return array
+   *   returns an array.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
@@ -181,6 +185,7 @@ class FinderController extends ControllerBase {
    * This function does something.
    *
    * @return array
+   *   This returns an array.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -235,10 +240,10 @@ class FinderController extends ControllerBase {
           if (count($paragraph->get($machine_name)->getValue()) > 0) {
             $field_data["value"] = $paragraph->get($machine_name)->getValue()[0]["value"];
 
-            // var_dump($paragraph->get($machine_name)->getValue()[0]["value"]); echo("<br>");.
+            /* var_dump($paragraph->get($machine_name)->getValue()[0]["value"]); echo("<br>");.*/
           }
 
-          // $field_config = \Drupal::entityManager()->getStorage('field_config')->load("paragraph" . '.' . "service_paragraphs" . '.' . $machine_name)->toArray();
+          /*$field_config = \Drupal::entityManager()->getStorage('field_config')->load("paragraph" . '.' . "service_paragraphs" . '.' . $machine_name)->toArray();*/
           $field_config = $this->entityManager->getStorage('field_config')->load("paragraph" . '.' . "service_paragraphs" . '.' . $machine_name)->toArray();
           $field_data["label"] = $field_config["label"];
           $field_data["weight"] = $pdcontent[$machine_name]["weight"];
@@ -268,6 +273,7 @@ class FinderController extends ControllerBase {
    * This function does something.
    *
    * @return \Drupal\Component\Serialization\JsonResponse
+   *   This returns a JsonResponse.
    *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
@@ -278,21 +284,23 @@ class FinderController extends ControllerBase {
   }
 
   /**
-   *
+   * A function to send email.
    */
   public function sendEmail() {
 
     if ($this->session->isStarted() === FALSE) {
       return new JsonResponse("no session, so sorry");
     }
+    /*
     // $url = \Drupal::request()->getSchemeAndHttpHost().
-    //        "/session/token";
+    //"/session/token";
     // $desiredtoken = $this->getWebPage($url);
     // $desired_token = session_id();
     // $desired_token = Drupal::csrfToken()->get();
     // $intoken = \Drupal::request()->headers->get("X-CSRF-Token");
     // return new JsonResponse(["want $desired_token got $intoken"]);
     // Data include name, email, facets (string)
+     */
     $json_string = \Drupal::request()->getContent();
     // $this->logger->notice("email json is $json_string");
     $decoded = Json::decode($json_string);
@@ -302,9 +310,7 @@ class FinderController extends ControllerBase {
     // Get $sdata from $decoded.
     $sdata = $decoded["sdata"];
 
-    $body = "Thank you for using the Finder tool. " .
-            "We hope it was useful.\r\n\r\n" .
-            "Your selected criteria were:\r\n";
+    $body = "Thank you for using the Finder tool. We hope it was useful.\r\n\r\n Your selected criteria were:\r\n";
 
     $questions = $this->createfacettree();
 
@@ -419,9 +425,17 @@ class FinderController extends ControllerBase {
   }
 
   /**
+   * Function to get web page.
    *
+   * @param string $url
+   *   The Url.
+   *
+   * @return bool|string
+   *   Returns false or a string.
    */
   private function getWebPage($url) {
+
+    // @todo check if curl is installed.
     $options = [
     // Return web page.
       CURLOPT_RETURNTRANSFER => TRUE,

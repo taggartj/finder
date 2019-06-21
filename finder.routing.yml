@@ -41,7 +41,7 @@ finder.settings:
 #  path: '/admin/structure/finder/settings'
   path: '/admin/config/content/finder'
   defaults:
-    _form: '\Drupal\finder\Form\finderSettingsForm'
+    _form: '\Drupal\finder\Form\FinderSettingsForm'
     _title: 'Finder Configuration'
   requirements:
     _permission: 'administer site configuration'

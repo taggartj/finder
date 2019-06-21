@@ -1,8 +1,5 @@
-<?PHP
+<?php
 
-// see
-// https://www.drupal.org/docs/8/api/configuration-api/working-with-configuration-forms
-//
 namespace Drupal\finder\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -11,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Configure example settings for this site.
  */
-class finderSettingsForm extends ConfigFormBase {
+class FinderSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
