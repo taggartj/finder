@@ -1,0 +1,12 @@
+entity.finders.add_form:
+  route_name: entity.finders.add_form
+  title: 'Add Finder application'
+  appears_on:
+    - entity.finders.collection
+
+
+entity.finders.settings:
+  route_name: finders.settings
+  title: 'Settings'
+  appears_on:
+    - entity.finders.collection

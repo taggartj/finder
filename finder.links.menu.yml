@@ -1,0 +1,14 @@
+
+# Finders menu items definition
+entity.finders.collection:
+  title: 'Finders list'
+  route_name: entity.finders.collection
+  description: 'List Finders entities'
+  parent: system.admin_structure
+  weight: 100
+
+finders.admin.structure.settings:
+  title: 'Finders settings'
+  description: 'Configure Finders entity settings'
+  route_name: finders.settings
+  parent: entity.finders.collection

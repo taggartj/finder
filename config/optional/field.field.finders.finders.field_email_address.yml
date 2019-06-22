@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.finders.field_email_address
+  module:
+    - finder
+id: finders.finders.field_email_address
+field_name: field_email_address
+entity_type: finders
+bundle: finders
+label: 'Email Address'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email

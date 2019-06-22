@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.finders.field_text_in_the_clear_selectio
+  module:
+    - finder
+id: finders.finders.field_text_in_the_clear_selectio
+field_name: field_text_in_the_clear_selectio
+entity_type: finders
+bundle: finders
+label: 'Text in the "Clear Selections" button'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 'Clear Selections'
+default_value_callback: ''
+settings: {  }
+field_type: string

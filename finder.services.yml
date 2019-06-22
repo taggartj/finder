@@ -2,3 +2,13 @@ services:
   logger.channel.finder:
     parent: logger.channel_base
     arguments: ['finder']
+
+  finder.route_subscriber:
+    class: Drupal\finder\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  finder.view.alter:
+    class: Drupal\finder\View\FinderViewAlter
+    arguments: ['@entity_type.manager', '@logger.channel.finder', '@session', '@entity.manager']
+

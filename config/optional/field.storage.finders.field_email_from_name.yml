@@ -2,13 +2,15 @@ langcode: en
 status: true
 dependencies:
   module:
-    - taxonomy
-id: taxonomy_term.field_control_type
-field_name: field_control_type
-entity_type: taxonomy_term
-type: entity_reference
+    - finder
+id: finders.field_email_from_name
+field_name: field_email_from_name
+entity_type: finders
+type: string
 settings:
-  target_type: taxonomy_term
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
 module: core
 locked: false
 cardinality: 1

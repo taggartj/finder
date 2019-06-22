@@ -1,14 +1,15 @@
-uuid: dc6698f8-52aa-4aa4-9c43-2120a6343ed6
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.node.service.field_facet_matches
+    - field.field.node.service.field_finder_application
     - field.field.node.service.field_service_paragraphs
     - field.field.node.service.field_summary
     - node.type.service
   module:
     - paragraphs
+    - workbench_moderation
 id: node.service.default
 targetEntityType: node
 bundle: service
@@ -17,6 +18,12 @@ content:
   field_facet_matches:
     type: options_buttons
     weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_finder_application:
+    type: options_buttons
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -37,6 +44,7 @@ content:
         duplicate: duplicate
         collapse_edit_all: collapse_edit_all
         add_above: '0'
+      closed_mode_threshold: 0
     third_party_settings: {  }
   field_summary:
     type: string_textfield

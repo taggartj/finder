@@ -99,11 +99,18 @@
         ];
 
     // Get finder settings DrupalSettings. saves a rest call.
+    var finder_id = 'default';
+
     if (drupalSettings.finderSettings) {
+        if (drupalSettings.finderSettings.finder_id) {
+            finder_id = drupalSettings.finderSettings.finder_id;
+        }
         console.log(drupalSettings.finderSettings);
         var response = drupalSettings.finderSettings;
-        $('#pagetitle').html(response.title.replace(/(?:\r\n|\r|\n)/g, '<br />'));
-        $('#pagesubtitle').html(response.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br />'));
+
+        // @TODO just move all these to the template.
+
+        //$('#pagesubtitle').html(response.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pagequestionheader').html(response.question_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pageserviceheader').html(response.service_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
         $('#pagechartheader').html(response.chart_header.replace(/(?:\r\n|\r|\n)/g, '<br />'));
@@ -118,7 +125,7 @@
     else {
         // Use original endpoint if not set.
         // read the data from JSON endpoints
-        $.getJSON( "/rest/finder_settings", function( response ) {
+        $.getJSON( "/rest/finder_settings?fid=" + finder_id, function( response ) {
             //alert(JSON.stringify(response));
             $('#pagetitle').html(response.title.replace(/(?:\r\n|\r|\n)/g, '<br />'));
             $('#pagesubtitle').html(response.subtitle.replace(/(?:\r\n|\r|\n)/g, '<br />'));
@@ -136,7 +143,7 @@
 
     }
 
-    $.getJSON( "/rest/facettree", function( response ) {
+    $.getJSON( "/rest/facettree?fid=" + finder_id, function( response ) {
         // JSON responses are automatically parsed.
 
         // here, see if there are selected facets in the URL
@@ -226,7 +233,7 @@
 
 
     // load the services
-    $.getJSON( "/rest/servicelist", function( responseb ) {
+    $.getJSON( "/rest/servicelist?fid=" + finder_id, function( responseb ) {
         services = responseb;
         //servicelist = responseb.data;
 

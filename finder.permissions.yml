@@ -1,0 +1,30 @@
+add finders entities:
+  title: 'Create new Finders entities'
+
+administer finders entities:
+  title: 'Administer Finders entities'
+  description: 'Allow to access the administration form to configure Finders entities.'
+  restrict access: true
+
+delete finders entities:
+  title: 'Delete Finders entities'
+
+edit finders entities:
+  title: 'Edit Finders entities'
+
+view published finders entities:
+  title: 'View published Finders entities'
+
+view unpublished finders entities:
+  title: 'View unpublished Finders entities'
+
+view all finders revisions:
+  title: 'View all Finders revisions'
+
+revert all finders revisions:
+  title: 'Revert all Finders revisions'
+  description: 'Role requires permission <em>view Finders revisions</em> and <em>edit rights</em> for finders entities in question or <em>administer finders entities</em>.'
+
+delete all finders revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Finders revisions</em> and <em>delete rights</em> for finders entities in question or <em>administer finders entities</em>.'

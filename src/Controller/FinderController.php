@@ -73,12 +73,13 @@ class FinderController extends ControllerBase {
   }
 
   /**
-   * Display the markup for /finder route.
+   * Depreciated !!! Display the markup for /finder route.
    *
    * @return array
    *   this returns the render array.
    */
   public function content() {
+    // Depreciated Removed.
     /* Assure that a session has been started,
     and then set the csrf_token.
      */
@@ -105,30 +106,32 @@ class FinderController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  private function createFacetTree() {
+  private function createFacetTree($finder_id) {
+
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')
       ->loadTree("facets", 0, NULL, TRUE);
     // $vid, $parent, $max_depth, $load_entities);
     // Extract data for all of the terms
     foreach ($terms as $term) {
-
-      if (count($term->get('field_control_type')->getValue()) > 0) {
-        $tid = $term->get('field_control_type')->getValue()[0]["target_id"];
-        $control_type = Term::load($tid)->getName();
+      if ($term->field_finder->target_id == $finder_id) {
+        if (count($term->get('field_control_type')->getValue()) > 0) {
+          $tid = $term->get('field_control_type')->getValue()[0]["target_id"];
+          $control_type = Term::load($tid)->getName();
+        }
+        else {
+          $control_type = NULL;
+        }
+        $term_data[] = [
+          'id' => $term->tid->value,
+          'name' => $term->name->value,
+          "control_type" => $control_type,
+          // There will only be one.
+          'parent' => $term->parents[0],
+          'weight' => $term->weight->value,
+          'selected' => FALSE,
+          'description' => $term->getDescription(),
+        ];
       }
-      else {
-        $control_type = NULL;
-      }
-      $term_data[] = [
-        'id' => $term->tid->value,
-        'name' => $term->name->value,
-        "control_type" => $control_type,
-      // There will only be one.
-        'parent' => $term->parents[0],
-        'weight' => $term->weight->value,
-        'selected' => FALSE,
-        'description' => $term->getDescription(),
-      ];
     }
 
     // Find the questions and add choices array.
@@ -177,7 +180,8 @@ class FinderController extends ControllerBase {
    *   Returns a json response.
    */
   public function facetTree() {
-    $questions = $this->createFacetTree();
+    $finder_id = $_GET['fid'];
+    $questions = $this->createFacetTree($finder_id);
     return new JsonResponse($questions);
   }
 
@@ -191,9 +195,11 @@ class FinderController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function createTestServiceList() {
-
+    //$this->logger->notice($_GET['fid']);
+    $finder_id = $_GET['fid'];
     $values = [
       'type' => 'service',
+      'field_finder_application' => $finder_id
     ];
 
     $nodes = $this->entityTypeManager

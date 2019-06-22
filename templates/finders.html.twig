@@ -1,0 +1,22 @@
+{#
+/**
+ * @file finders.html.twig
+ * Default theme implementation to present Finders data.
+ *
+ * This template is used when viewing Finders pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_finders()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('finders') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

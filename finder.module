@@ -5,6 +5,10 @@
  * Contains the finder.module.
  */
 
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Implements hook_theme().
  */
@@ -13,6 +17,10 @@ function finder_theme($existing, $type, $theme, $path) {
     'finder' => [
       'variables' => [],
       'template' => 'finder',
+    ],
+    'finder_entity' => [
+      'variables' => [],
+      'template' => 'finder_entity',
     ],
   ];
 }
@@ -35,19 +43,117 @@ function finder_mail($key, &$message, $params) {
 }
 
 /**
- * This gets the configuration page to show up.
+ * Implements hook_entity_base_field_info().
  */
-function finder_menu() {
-  $items = [];
-  $items['admin/config/content/finder'] = [
-    'title' => 'Finder',
-    'description' => 'Configuration for Finder module',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => ['finder_admin_settings'],
-    'access arguments' => ['access administration pages'],
-    'type' => MENU_NORMAL_ITEM,
-  ];
+function finder_entity_base_field_info(EntityTypeInterface $entity_type) {
+  if (in_array($entity_type->id(), ['finders'], TRUE)) {
+    $fields['path'] = BaseFieldDefinition::create('path')
+      ->setLabel(t('URL alias'))
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'path',
+        'weight' => 30,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setComputed(TRUE);
 
-  return $items;
+    return $fields;
+  }
+}
 
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter().
+ */
+function finder_finders_view_alter(array &$build, Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
+  if ($build['#view_mode'] == 'full') {
+    return \Drupal::service('finder.view.alter')->hookViewAlter($build, $entity, $display);
+  }
+}
+
+/**
+ * Perform alterations before an entity form is included in the IEF widget.
+ *
+ * @param $entity_form
+ *   Nested array of form elements that comprise the entity form.
+ * @param $form_state
+ *   The form state of the parent form.
+ */
+function finder_inline_entity_form_entity_form_alter(&$entity_form, FormStateInterface $form_state) {
+  // Make so select is current entity only
+  if ($entity_form['#entity_type'] == 'taxonomy_term' &&$entity_form['#bundle'] == 'facets') {
+    $finders_entity = \Drupal::request()->get('finders');
+    if (!empty($finders_entity)) {
+      $id = (int) $finders_entity->id();
+      $options = $entity_form['field_finder']['widget']['#options'];
+      $new_options = [];
+      foreach($options as $key => $option) {
+        if ($key == $id) {
+          $new_options[$key] = $option;
+        }
+      }
+    }
+    $entity_form['field_finder']['widget']['#options'] = $new_options;
+    $entity_form['field_finder']['widget']['#default_value'] = $id;
+    //die('sss');
+  }
+  if ($entity_form['#entity_type'] == 'node' && $entity_form['#bundle'] == 'service') {
+    $finders_entity = \Drupal::request()->get('finders');
+    if (!empty($finders_entity)) {
+      $id = (int)$finders_entity->id();
+      $options = $entity_form['field_finder_application']['widget']['#options'];
+      $new_options = [];
+      foreach($options as $key => $option) {
+        if ($key == $id) {
+          $new_options[$key] = $option;
+        }
+      }
+      $entity_form['field_finder_application']['widget']['#options'] = $new_options;
+      $entity_form['field_finder_application']['widget']['#default_value'] = $id;
+
+
+      $options_only = $entity_form['field_facet_matches']['widget']['#options'];
+      $to_load = [];
+      foreach ($options_only as $keys => $vals) {
+        $to_load[$keys] = $keys;
+      }
+
+      if (!empty($to_load)) {
+        // load all and check if belong to this entity.
+        $loaded_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($to_load);
+        if (!empty($loaded_terms)) {
+          foreach ($loaded_terms as $term) {
+            $term_id = $term->id();
+            if ($term->field_finder->target_id != $id) {
+              unset($options_only[$term_id]);
+            }
+          }
+        }
+        if (count($options_only) == 0) {
+          $form_state->setErrorByName('field_facet_matches' , 'Sorry please add some questions and save them.');
+        }
+        $entity_form['field_facet_matches']['widget']['#options'] = $options_only;
+      }
+    }
+  }
+}
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function finder_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ($form_id === 'finders_add_form') {
+
+     unset($form['field_services']);
+     unset($form['field_questions']);
+    $form['info'] = [
+      '#markup' => '<h2>Please Fill out All form fields on this form,  click save then after edit the page</h2>',
+      '#weight' => -100,
+    ];
+    $form['#fieldgroups']['group_page_items_set']->format_settings['open'] = TRUE;
+
+
+    //$form['path']['widget'][0]['#required'] = TRUE;
+  }
 }

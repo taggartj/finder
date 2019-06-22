@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.finders.field_main_header_text_in_green_
+  module:
+    - finder
+id: finders.finders.field_main_header_text_in_green_
+field_name: field_main_header_text_in_green_
+entity_type: finders
+bundle: finders
+label: 'Main header (text in green)'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

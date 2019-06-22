@@ -2,15 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_facet_matches
-    - node.type.service
+    - field.storage.finders.field_questions
     - taxonomy.vocabulary.facets
-id: node.service.field_facet_matches
-field_name: field_facet_matches
-entity_type: node
-bundle: service
-label: 'Facet Matches'
-description: ''
+  module:
+    - finder
+id: finders.finders.field_questions
+field_name: field_questions
+entity_type: finders
+bundle: finders
+label: Questions
+description: 'These are the questions to ask for exact grouping please fine tune  <a href="/admin/structure/taxonomy/manage/facets/overview" traget="_blank">here</a>.'
 required: false
 translatable: false
 default_value: {  }

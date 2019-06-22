@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.finders.field_email_header
+  module:
+    - finder
+id: finders.finders.field_email_header
+field_name: field_email_header
+entity_type: finders
+bundle: finders
+label: 'Email Header'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

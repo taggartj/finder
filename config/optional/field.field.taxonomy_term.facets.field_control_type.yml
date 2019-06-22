@@ -1,4 +1,3 @@
-uuid: da82d0be-15c7-4df9-b298-4ab4ef8a46f7
 langcode: en
 status: true
 dependencies:
@@ -7,20 +6,18 @@ dependencies:
     - taxonomy.vocabulary.control_type
     - taxonomy.vocabulary.facets
   content:
-    - 'taxonomy_term:control_type:e138e5a3-0eb3-4bd6-971c-094a2da11b51'
-_core:
-  default_config_hash: uLcoXrP7ENedZBxNtr-a-cZg7vg7PqbbOcmEyYN288Q
+    - 'taxonomy_term:control_type:34e1bb3e-6986-4576-82f0-d5065f69fd21'
 id: taxonomy_term.facets.field_control_type
 field_name: field_control_type
 entity_type: taxonomy_term
 bundle: facets
 label: 'Control Type'
 description: ''
-required: false
+required: true
 translatable: false
 default_value:
   -
-    target_uuid: e138e5a3-0eb3-4bd6-971c-094a2da11b51
+    target_uuid: 34e1bb3e-6986-4576-82f0-d5065f69fd21
 default_value_callback: ''
 settings:
   handler: 'default:taxonomy_term'

@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Implements hook_install()
+ */
+function finder_install() {
+  // Here Create the 2 Terms required.
+  $storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+  $terms = [];
+  $terms[] = [
+    "name" => "checkbox",
+    "vid" => "control_type",
+    "bundle" => "control_type",
+    "description" => "",
+  ];
+
+  $terms[] = [
+    "name" => "radio",
+    "vid" => "control_type",
+    "bundle" => "control_type",
+    "description" => "",
+  ];
+
+  foreach ($terms as $term) {
+    $new = $storage->create($term);
+    $new->save();
+  }
+}

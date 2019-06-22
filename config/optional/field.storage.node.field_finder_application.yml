@@ -2,13 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - taxonomy
-id: taxonomy_term.field_control_type
-field_name: field_control_type
-entity_type: taxonomy_term
+    - finder
+    - node
+id: node.field_finder_application
+field_name: field_finder_application
+entity_type: node
 type: entity_reference
 settings:
-  target_type: taxonomy_term
+  target_type: finders
 module: core
 locked: false
 cardinality: 1

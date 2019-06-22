@@ -1,0 +1,194 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.finders.finders.field_chart_head
+    - field.field.finders.finders.field_email_address
+    - field.field.finders.finders.field_email_body
+    - field.field.finders.finders.field_email_from_name
+    - field.field.finders.finders.field_email_header
+    - field.field.finders.finders.field_main_header_text_in_green_
+    - field.field.finders.finders.field_question_header
+    - field.field.finders.finders.field_questions
+    - field.field.finders.finders.field_select_all_button_text
+    - field.field.finders.finders.field_service_header
+    - field.field.finders.finders.field_services
+    - field.field.finders.finders.field_subtitle
+    - field.field.finders.finders.field_text_in_the_clear_selectio
+  module:
+    - field_group
+    - finder
+    - inline_entity_form
+    - path
+third_party_settings:
+  field_group:
+    group_page_items:
+      children:
+        - field_question_header
+        - field_service_header
+        - field_chart_head
+        - field_email_header
+        - field_email_address
+        - field_email_from_name
+        - field_email_body
+        - field_main_header_text_in_green_
+        - field_select_all_button_text
+        - field_text_in_the_clear_selectio
+      parent_name: ''
+      weight: 3
+      format_type: details
+      format_settings:
+        id: page-items-display
+        classes: ''
+        open: false
+        required_fields: true
+      label: 'Page Items'
+id: finders.finders.default
+targetEntityType: finders
+bundle: finders
+mode: default
+content:
+  field_chart_head:
+    weight: 6
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_email_address:
+    weight: 8
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_email_body:
+    weight: 10
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_email_from_name:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_email_header:
+    weight: 7
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_main_header_text_in_green_:
+    weight: 11
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_question_header:
+    weight: 4
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_questions:
+    type: inline_entity_form_complex
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      collapsible: false
+      collapsed: false
+      allow_new: true
+      allow_existing: false
+      allow_duplicate: false
+    third_party_settings: {  }
+  field_select_all_button_text:
+    weight: 12
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_service_header:
+    weight: 5
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_services:
+    type: inline_entity_form_complex
+    weight: 5
+    region: content
+    settings:
+      form_mode: default
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      match_operator: CONTAINS
+      override_labels: false
+      collapsible: false
+      collapsed: false
+      allow_existing: false
+      allow_duplicate: false
+    third_party_settings: {  }
+  field_subtitle:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_text_in_the_clear_selectio:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  user_id:
+    type: entity_reference_autocomplete
+    weight: 6
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    region: content
+    third_party_settings: {  }
+hidden: {  }

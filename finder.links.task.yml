@@ -1,0 +1,26 @@
+# Finders routing definition
+finders.settings_tab:
+  route_name: finders.settings
+  title: 'Settings'
+  base_route: finders.settings
+
+entity.finders.canonical:
+  route_name: entity.finders.canonical
+  base_route: entity.finders.canonical
+  title: 'View'
+
+entity.finders.edit_form:
+  route_name: entity.finders.edit_form
+  base_route: entity.finders.canonical
+  title: 'Edit'
+
+entity.finders.version_history:
+  route_name: entity.finders.version_history
+  base_route: entity.finders.canonical
+  title: 'Revisions'
+
+entity.finders.delete_form:
+  route_name:  entity.finders.delete_form
+  base_route:  entity.finders.canonical
+  title: Delete
+  weight: 10

@@ -6,6 +6,9 @@ type: module
 core: 8.x
 dependencies:
   - paragraphs
+  - field_group
+  - path
+  - inline_entity_form
 libraries:
   - finder/finder
 configure: finder.settings

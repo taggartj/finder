@@ -1,12 +1,13 @@
-finder.content:
-  path: '/finder'
-  defaults:
-    _controller: '\Drupal\finder\Controller\FinderController::content'
-    _title: 'Finder'
-  requirements:
-    _permission: 'access content'
-  options:
-    no_cache: 'TRUE'
+# This route is Depreciated.
+#finder.content:
+#  path: '/finder'
+#  defaults:
+#    _controller: '\Drupal\finder\Controller\FinderController::content'
+#    _title: 'Finder'
+#  requirements:
+#    _permission: 'access content'
+#  options:
+#    no_cache: 'TRUE'
 
 finder.facettree:
   path: '/rest/facettree'
@@ -14,6 +15,8 @@ finder.facettree:
     _controller: '\Drupal\finder\Controller\FinderController::facetTree'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
 
 finder.servicelist:
   path: '/rest/servicelist'
@@ -21,6 +24,8 @@ finder.servicelist:
     _controller: '\Drupal\finder\Controller\FinderController::serviceList'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
 
 finder.sendemail:
   path: '/rest/sendemail'
@@ -29,19 +34,26 @@ finder.sendemail:
     _controller: '\Drupal\finder\Controller\FinderController::sendEmail'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
 
+# Depreciated.
 finder.configuration:
   path: '/rest/finder_settings'
   defaults:
     _controller: '\Drupal\finder\Controller\FinderController::configuration'
   requirements:
     _permission: 'access content'
+  options:
+    no_cache: 'TRUE'
 
-finder.settings:
-#  path: '/admin/structure/finder/settings'
-  path: '/admin/config/content/finder'
-  defaults:
-    _form: '\Drupal\finder\Form\FinderSettingsForm'
-    _title: 'Finder Configuration'
-  requirements:
-    _permission: 'administer site configuration'
+
+# Depreciated.
+#finder.settings:
+##  path: '/admin/structure/finder/settings'
+#  path: '/admin/config/content/finder'
+#  defaults:
+#    _form: '\Drupal\finder\Form\FinderSettingsForm'
+#    _title: 'Finder Configuration'
+#  requirements:
+#    _permission: 'administer site configuration'

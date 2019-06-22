@@ -445,7 +445,9 @@ h2.sub-heading.heading-services {
 .cd-row {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex;
+  min-height: 300px;
+}
   @media screen and (max-width: 768px) {
     .cd-row {
       display: block; } }
