@@ -5,16 +5,14 @@ namespace Drupal\finder\View;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 
-use Drupal\Component\Serialization\Json;
-use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityManagerInterface;
-use Drupal\taxonomy\Entity\Term;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
+/**
+ *  This class alters the finders entity view with cool stuff.
+ */
 class FinderViewAlter {
 
 
@@ -69,7 +67,7 @@ class FinderViewAlter {
     $data = [
       'finder_id' => $finder->id(),
     ];
-    //$data["subtitle"] = $finder->field_subtitle->value;
+    // $data["subtitle"] = $finder->field_subtitle->value;
     $data["question_header"] = $finder->field_question_header->value;
     $data["service_header"] = $finder->field_service_header->value;
     $data["chart_header"] = $finder->field_chart_head->value;
@@ -81,7 +79,7 @@ class FinderViewAlter {
     $data["button_clear_selections"] = $finder->field_text_in_the_clear_selectio->value;
 
     // Remove from default entity render.
-    //unset($build['field_subtitle']);
+    // unset($build['field_subtitle']);.
     unset($build['field_question_header']);
     unset($build['field_service_header']);
     unset($build['field_email_header']);
@@ -93,7 +91,7 @@ class FinderViewAlter {
     unset($build['field_email_body']);
     unset($build['field_main_header_text_in_green_']);
 
-    // remove the following cache this after done
+    // Remove the following cache this after done.
     $build['#cache'] = [
       '#max-age' => -1,
       '#tags' => [],
@@ -108,7 +106,8 @@ class FinderViewAlter {
       ],
     ];
 
-    //dump($build);
+    // dump($build);
     $build['#attached']['drupalSettings']['finderSettings'] = $data;
   }
+
 }

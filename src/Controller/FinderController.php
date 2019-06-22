@@ -195,11 +195,11 @@ class FinderController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   private function createTestServiceList() {
-    //$this->logger->notice($_GET['fid']);
+    // $this->logger->notice($_GET['fid']);
     $finder_id = $_GET['fid'];
     $values = [
       'type' => 'service',
-      'field_finder_application' => $finder_id
+      'field_finder_application' => $finder_id,
     ];
 
     $nodes = $this->entityTypeManager

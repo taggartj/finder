@@ -17,19 +17,20 @@ class RouteSubscriber extends RouteSubscriberBase {
    */
   protected function alterRoutes(RouteCollection $collection) {
 
-    //dump($collection);
+    // dump($collection);
     /*
     if ($route = $collection->get('entity.finders.canonical')) {
-      //dump($route);
+    //dump($route);
     }
-    */
+     */
 
     if ($route = $collection->get('entity.finders.collection')) {
       $defaults = $route->getDefaults();
-      //dump($defaults);
+      // dump($defaults);
       $defaults['_title'] = 'Finder Applications';
       $route->setDefaults($defaults);
     }
 
   }
+
 }

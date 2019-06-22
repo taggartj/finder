@@ -5,6 +5,8 @@
  * Contains the finder.module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Form\FormStateInterface;
@@ -61,11 +63,10 @@ function finder_entity_base_field_info(EntityTypeInterface $entity_type) {
   }
 }
 
-
 /**
  * Implements hook_ENTITY_TYPE_view_alter().
  */
-function finder_finders_view_alter(array &$build, Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display) {
+function finder_finders_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
   if ($build['#view_mode'] == 'full') {
     return \Drupal::service('finder.view.alter')->hookViewAlter($build, $entity, $display);
   }
@@ -80,14 +81,14 @@ function finder_finders_view_alter(array &$build, Drupal\Core\Entity\EntityInter
  *   The form state of the parent form.
  */
 function finder_inline_entity_form_entity_form_alter(&$entity_form, FormStateInterface $form_state) {
-  // Make so select is current entity only
+  // Make so select is current entity only.
   if ($entity_form['#entity_type'] == 'taxonomy_term' &&$entity_form['#bundle'] == 'facets') {
     $finders_entity = \Drupal::request()->get('finders');
     if (!empty($finders_entity)) {
       $id = (int) $finders_entity->id();
       $options = $entity_form['field_finder']['widget']['#options'];
       $new_options = [];
-      foreach($options as $key => $option) {
+      foreach ($options as $key => $option) {
         if ($key == $id) {
           $new_options[$key] = $option;
         }
@@ -95,22 +96,21 @@ function finder_inline_entity_form_entity_form_alter(&$entity_form, FormStateInt
     }
     $entity_form['field_finder']['widget']['#options'] = $new_options;
     $entity_form['field_finder']['widget']['#default_value'] = $id;
-    //die('sss');
+    // die('sss');.
   }
   if ($entity_form['#entity_type'] == 'node' && $entity_form['#bundle'] == 'service') {
     $finders_entity = \Drupal::request()->get('finders');
     if (!empty($finders_entity)) {
-      $id = (int)$finders_entity->id();
+      $id = (int) $finders_entity->id();
       $options = $entity_form['field_finder_application']['widget']['#options'];
       $new_options = [];
-      foreach($options as $key => $option) {
+      foreach ($options as $key => $option) {
         if ($key == $id) {
           $new_options[$key] = $option;
         }
       }
       $entity_form['field_finder_application']['widget']['#options'] = $new_options;
       $entity_form['field_finder_application']['widget']['#default_value'] = $id;
-
 
       $options_only = $entity_form['field_facet_matches']['widget']['#options'];
       $to_load = [];
@@ -119,7 +119,7 @@ function finder_inline_entity_form_entity_form_alter(&$entity_form, FormStateInt
       }
 
       if (!empty($to_load)) {
-        // load all and check if belong to this entity.
+        // Load all and check if belong to this entity.
         $loaded_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadMultiple($to_load);
         if (!empty($loaded_terms)) {
           foreach ($loaded_terms as $term) {
@@ -130,7 +130,7 @@ function finder_inline_entity_form_entity_form_alter(&$entity_form, FormStateInt
           }
         }
         if (count($options_only) == 0) {
-          $form_state->setErrorByName('field_facet_matches' , 'Sorry please add some questions and save them.');
+          $form_state->setErrorByName('field_facet_matches', 'Sorry please add some questions and save them.');
         }
         $entity_form['field_facet_matches']['widget']['#options'] = $options_only;
       }
@@ -138,22 +138,20 @@ function finder_inline_entity_form_entity_form_alter(&$entity_form, FormStateInt
   }
 }
 
-
 /**
  * Implements hook_form_alter().
  */
-function finder_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function finder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   if ($form_id === 'finders_add_form') {
 
-     unset($form['field_services']);
-     unset($form['field_questions']);
+    unset($form['field_services']);
+    unset($form['field_questions']);
     $form['info'] = [
       '#markup' => '<h2>Please Fill out All form fields on this form,  click save then after edit the page</h2>',
       '#weight' => -100,
     ];
     $form['#fieldgroups']['group_page_items_set']->format_settings['open'] = TRUE;
 
-
-    //$form['path']['widget'][0]['#required'] = TRUE;
+    // $form['path']['widget'][0]['#required'] = TRUE;
   }
 }

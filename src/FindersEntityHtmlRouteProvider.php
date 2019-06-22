@@ -20,8 +20,7 @@ class FindersEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
   public function getRoutes(EntityTypeInterface $entity_type) {
     $collection = parent::getRoutes($entity_type);
     $entity_type_id = $entity_type->id();
-    //dump($collection);
-
+    // dump($collection);
     if ($history_route = $this->getHistoryRoute($entity_type)) {
       $collection->add("entity.{$entity_type_id}.version_history", $history_route);
     }

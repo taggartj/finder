@@ -4,7 +4,6 @@ namespace Drupal\finder;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
-use Drupal\Core\Link;
 
 /**
  * Defines a class to build a listing of Finders entities.
@@ -29,9 +28,9 @@ class FindersEntityListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var \Drupal\finder\Entity\FindersEntity $entity */
     $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/finders/' . $entity->id());
-    //dump($alias);
+    // dump($alias);
     $row['id'] = $entity->id();
-    $row['view'] = $this->t('<a href="@path">@l</a>', ['@path' => $alias, '@l' =>  $entity->label()]);
+    $row['view'] = $this->t('<a href="@path">@l</a>', ['@path' => $alias, '@l' => $entity->label()]);
 
     return $row + parent::buildRow($entity);
   }
