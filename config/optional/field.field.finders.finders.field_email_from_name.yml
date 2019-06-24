@@ -11,7 +11,7 @@ entity_type: finders
 bundle: finders
 label: 'Email From Name'
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

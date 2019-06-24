@@ -3,13 +3,13 @@ status: true
 dependencies:
   module:
     - finder
+    - text
 id: finders.field_subtitle
 field_name: field_subtitle
 entity_type: finders
-type: string_long
-settings:
-  case_sensitive: false
-module: core
+type: text_long
+settings: {  }
+module: text
 locked: false
 cardinality: 1
 translatable: true

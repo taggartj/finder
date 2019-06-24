@@ -11,7 +11,7 @@ entity_type: finders
 bundle: finders
 label: 'Main header (text in green)'
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''

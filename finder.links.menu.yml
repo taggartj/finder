@@ -1,9 +1,9 @@
 
 # Finders menu items definition
 entity.finders.collection:
-  title: 'Finders list'
+  title: 'Finders Applications'
   route_name: entity.finders.collection
-  description: 'List Finders entities'
+  description: 'List Finders application entities'
   parent: system.admin_structure
   weight: 100
 

@@ -2,22 +2,54 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.service.field_facet_matches
     - field.field.node.service.field_finder_application
+    - field.field.node.service.field_service_paragraphs
+    - field.field.node.service.field_summary
     - node.type.service
   module:
+    - entity_reference_revisions
     - user
 id: node.service.default
 targetEntityType: node
 bundle: service
 mode: default
 content:
+  field_facet_matches:
+    type: entity_reference_label
+    weight: 2
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_finder_application:
+    type: entity_reference_label
+    weight: 3
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+  field_service_paragraphs:
+    type: entity_reference_revisions_entity_view
+    weight: 4
+    region: content
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_summary:
+    weight: 5
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
   links:
     weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  field_facet_matches: true
-  field_finder_application: true
-  field_service_paragraphs: true
-  field_summary: true
+hidden: {  }

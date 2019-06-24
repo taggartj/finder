@@ -5,8 +5,6 @@ dependencies:
     - field.storage.taxonomy_term.field_control_type
     - taxonomy.vocabulary.control_type
     - taxonomy.vocabulary.facets
-  content:
-    - 'taxonomy_term:control_type:34e1bb3e-6986-4576-82f0-d5065f69fd21'
 id: taxonomy_term.facets.field_control_type
 field_name: field_control_type
 entity_type: taxonomy_term

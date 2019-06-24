@@ -1,4 +1,3 @@
-uuid: 7441436c-3b5c-402e-9f6b-c049b12698a0
 langcode: en
 status: true
 dependencies:
@@ -9,8 +8,6 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
-_core:
-  default_config_hash: EyvNo1oZazY9kHGtHDlaLCzDlkxzbRgc089SL00ylo8
 name: Service
 type: service
 description: 'Part of the Finder module'

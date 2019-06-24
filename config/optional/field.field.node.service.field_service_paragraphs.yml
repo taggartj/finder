@@ -1,4 +1,3 @@
-uuid: e2042785-f628-42e0-a312-0e8b8e217e48
 langcode: en
 status: true
 dependencies:
@@ -8,8 +7,6 @@ dependencies:
     - paragraphs.paragraphs_type.service_paragraphs
   module:
     - entity_reference_revisions
-_core:
-  default_config_hash: odxUnLo2A2qEn1o-vxZP1C_EimpW34IwmSS8cShH__Q
 id: node.service.field_service_paragraphs
 field_name: field_service_paragraphs
 entity_type: node

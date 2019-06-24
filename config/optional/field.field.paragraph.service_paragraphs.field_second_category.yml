@@ -1,4 +1,3 @@
-uuid: bb725f86-2933-4eb4-b598-3205289d6950
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - paragraphs.paragraphs_type.service_paragraphs
   module:
     - text
-_core:
-  default_config_hash: DNldmIx5lChSKe6Ta608-deB2-USf89sU7-tU4ZbydY
 id: paragraph.service_paragraphs.field_second_category
 field_name: field_second_category
 entity_type: paragraph

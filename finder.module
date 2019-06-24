@@ -147,11 +147,12 @@ function finder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     unset($form['field_services']);
     unset($form['field_questions']);
     $form['info'] = [
-      '#markup' => '<h2>Please Fill out All form fields on this form,  click save then after edit the page</h2>',
+      '#markup' => '<h2>Please Fill out All form fields and click save then after edit the page.</h2>',
       '#weight' => -100,
     ];
-    $form['#fieldgroups']['group_page_items_set']->format_settings['open'] = TRUE;
 
+    //dump($form);
+    $form['#fieldgroups']['group_page_items']->format_settings['open'] = TRUE;
     // $form['path']['widget'][0]['#required'] = TRUE;
   }
 }

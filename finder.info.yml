@@ -11,4 +11,4 @@ dependencies:
   - inline_entity_form
 libraries:
   - finder/finder
-configure: finder.settings
+configure: entity.finders.collection

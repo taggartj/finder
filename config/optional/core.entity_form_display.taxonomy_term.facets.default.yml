@@ -6,12 +6,20 @@ dependencies:
     - field.field.taxonomy_term.facets.field_finder
     - taxonomy.vocabulary.facets
   module:
-    - workbench_moderation
+    - text
 id: taxonomy_term.facets.default
 targetEntityType: taxonomy_term
 bundle: facets
 mode: default
 content:
+  description:
+    type: text_textarea
+    weight: 3
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_control_type:
     type: options_buttons
     weight: 1
@@ -33,5 +41,4 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  description: true
   path: true

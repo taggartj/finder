@@ -5,15 +5,16 @@ dependencies:
     - field.storage.finders.field_subtitle
   module:
     - finder
+    - text
 id: finders.finders.field_subtitle
 field_name: field_subtitle
 entity_type: finders
 bundle: finders
 label: Subtitle
-description: 'describe this. '
-required: false
+description: ''
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string_long
+field_type: text_long

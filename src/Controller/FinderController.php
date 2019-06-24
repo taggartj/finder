@@ -207,16 +207,21 @@ class FinderController extends ControllerBase {
       ->getStorage()
       ->loadByProperties($values);
 
+
     // Where we will build the service data.
     $services = [];
 
+    // dump($this->entityTypeManager->getStorage('entity_view_display'));
     // This is how to get the node info.
-    $display = $this->entityTypeManager->getStorage('entity_view_display')
-      ->load("node" . '.' . "service" . '.' . "default");
+    //$display = $this->entityTypeManager->getStorage('entity_view_display')
+    //  ->load("node" . '.' . "service" . '.' . "default");
+    $display = $this->entityTypeManager->getStorage('entity_view_display')->load('node.service.default');
+
 
     // echo(json_encode($display->toArray())); echo"<br>";.
     $paragraph_display = $this->entityTypeManager->getStorage('entity_view_display')
       ->load("paragraph.service_paragraphs.default");
+    //dump($paragraph_display);
     // ->load("paragraph" . '.' . "service_paragraphs" . '.' . "default");
     foreach ($nodes as $node) {
 
@@ -239,6 +244,7 @@ class FinderController extends ControllerBase {
         // the fields are array_keys($paragraph_display["content"])
         // the weights are $paragraph_display["content"][$field]["weight"]
         // var_dump($paragraph_display); exit;.
+
         $pdcontent = $paragraph_display->toArray()["content"];
 
         foreach ($pdcontent as $machine_name => $field_data) {

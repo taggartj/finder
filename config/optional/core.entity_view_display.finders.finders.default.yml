@@ -9,96 +9,26 @@ dependencies:
     - field.field.finders.finders.field_email_header
     - field.field.finders.finders.field_main_header_text_in_green_
     - field.field.finders.finders.field_question_header
+    - field.field.finders.finders.field_questions
     - field.field.finders.finders.field_select_all_button_text
     - field.field.finders.finders.field_service_header
+    - field.field.finders.finders.field_services
     - field.field.finders.finders.field_subtitle
     - field.field.finders.finders.field_text_in_the_clear_selectio
   module:
     - finder
+    - text
 id: finders.finders.default
 targetEntityType: finders
 bundle: finders
 mode: default
 content:
-  field_chart_head:
-    weight: 4
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_email_address:
-    weight: 6
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_email_body:
-    weight: 8
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_email_from_name:
-    weight: 7
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_email_header:
-    weight: 5
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_main_header_text_in_green_:
-    weight: 9
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_question_header:
-    weight: 2
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_select_all_button_text:
-    weight: 10
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
-  field_service_header:
-    weight: 3
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: content
   field_subtitle:
     weight: 1
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
-    region: content
-  field_text_in_the_clear_selectio:
-    weight: 11
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
+    type: text_default
     region: content
   name:
     label: hidden
@@ -109,4 +39,16 @@ content:
       link_to_entity: false
     third_party_settings: {  }
 hidden:
+  field_chart_head: true
+  field_email_address: true
+  field_email_body: true
+  field_email_from_name: true
+  field_email_header: true
+  field_main_header_text_in_green_: true
+  field_question_header: true
+  field_questions: true
+  field_select_all_button_text: true
+  field_service_header: true
+  field_services: true
+  field_text_in_the_clear_selectio: true
   user_id: true
